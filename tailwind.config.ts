@@ -11,6 +11,12 @@ const colors = {
     white: {
       primary: "#ffffff",
     },
+    gray: {
+      primary: "#D9D9D9",
+    },
+    black: {
+      primary: "#232325",
+    },
   },
 };
 

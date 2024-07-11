@@ -1,8 +1,8 @@
 import Image from "next/image";
-import ClearDay from "../assets/ClearDay.svg";
-import NotificationBell from "../assets/NotificationBell.svg";
-import QuestionMark from "../assets/QuestionMark.svg";
-import Settings from "../assets/Settings.svg";
+import ClearDay from "../assets/navbar/ClearDay.svg";
+import NotificationBell from "../assets/navbar/NotificationBell.svg";
+import QuestionMark from "../assets/navbar/QuestionMark.svg";
+import Settings from "../assets/common/Settings.svg";
 
 const Navbar = () => {
   return (
