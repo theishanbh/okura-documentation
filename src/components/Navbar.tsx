@@ -3,6 +3,7 @@ import ClearDay from "../assets/navbar/ClearDay.svg";
 import NotificationBell from "../assets/navbar/NotificationBell.svg";
 import QuestionMark from "../assets/navbar/QuestionMark.svg";
 import Settings from "../assets/common/Settings.svg";
+import KeyboardArrowDown from "../assets/common/KeyboardArrowDown.svg";
 
 const Navbar = () => {
   return (
@@ -21,9 +22,14 @@ const Navbar = () => {
         {/* home, project, templates, create */}
         <div className="pl-4 flex gap-6 justify-center items-center text-blue-primary  h-full text-lg">
           <span className="">Home</span>
-          <span className="">Projects</span>
+          <span className="flex gap-2">
+            <span>Projects</span>
+            <Image src={KeyboardArrowDown} alt="alt" />
+          </span>
           <span className="">Templates</span>
-          <span className="">Create</span>
+          <button className="text-white-primary bg-blue-primary py-1 px-2 rounded-lg">
+            + Create
+          </button>
         </div>
         {/* {search, appearance mode}, {notifications, question, settings,account} */}
         <div className="flex gap-6 h-full items-center ">
