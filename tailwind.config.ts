@@ -1,4 +1,18 @@
+const { colors: defaultColors } = require("tailwindcss/defaultTheme");
 import type { Config } from "tailwindcss";
+
+const colors = {
+  ...defaultColors,
+  ...{
+    blue: {
+      primary: "#044899",
+      secondary: "#9EBEE2",
+    },
+    white: {
+      primary: "#ffffff",
+    },
+  },
+};
 
 const config: Config = {
   content: [
@@ -8,11 +22,7 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
-      },
+      colors: colors,
     },
   },
   plugins: [],
