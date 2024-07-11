@@ -29,6 +29,9 @@ const config: Config = {
   theme: {
     extend: {
       colors: colors,
+      fontFamily: {
+        Inter: ["Inter", "sans-serif"],
+      },
     },
   },
   plugins: [],
