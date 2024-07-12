@@ -5,17 +5,26 @@ const colors = {
   ...defaultColors,
   ...{
     blue: {
-      primary: "#044899",
-      secondary: "#9EBEE2",
+      custom: {
+        primary: "#044899",
+        secondary: "#9EBEE2",
+        50: "#DEEFFE",
+      },
     },
     white: {
-      primary: "#ffffff",
+      custom: {
+        primary: "#ffffff",
+      },
     },
     gray: {
-      primary: "#D9D9D9",
+      custom: {
+        primary: "#D9D9D9",
+      },
     },
     black: {
-      primary: "#232325",
+      custom: {
+        primary: "#232325",
+      },
     },
   },
 };
