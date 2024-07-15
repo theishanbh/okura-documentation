@@ -11,6 +11,7 @@ import {
   createModelFromHtml,
   toggleCode,
   insertImage,
+  toggleBullet,
 } from "roosterjs";
 
 type RoosterEditorProps = {
@@ -62,6 +63,7 @@ const RoosterEditor: React.FC<RoosterEditorProps> = ({ initialHtml }) => {
         <button onClick={() => redo(iEditor!)}>redo</button>
         <button onClick={() => toggleBold(iEditor!)}>bold</button>
         <button onClick={() => toggleCode(iEditor!)}>{"<>"}</button>
+        <button onClick={() => toggleBullet(iEditor!)}>{"bullet"}</button>
         <button
           onClick={() =>
             insertImage(

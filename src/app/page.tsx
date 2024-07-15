@@ -1,38 +1,54 @@
-import Navbar from "@/components/Navbar";
-import RoosterEditor from "@/components/RoosterEditor";
-import KeyboardArrow from "../assets/common/KeyboardArrow.svg";
+"use client";
+
+import KeyboardArrow from "/public/assets/common/KeyboardArrow.svg";
 import Image from "next/image";
-import { QuickAccess } from "@/components/editorOptions/QuickAccess";
-import { ReactElement } from "react";
+import { useEffect, useRef, useState } from "react";
+import {
+  createEditor,
+  createModelFromHtml,
+  EditorPlugin,
+  IEditor,
+  ImageEditPlugin,
+  TableEditPlugin,
+} from "roosterjs";
 
-const initialHtmlString = `<!DOCTYPE html> 
-  <html lang="en"> 
-  <head> 
-      <meta charset="UTF-8"> 
-      <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-      <title>HTML JavaScript</title> 
-  </head> 
-  <body> 
-      <h1>GeeksforGeeks</h1> 
-      <h3>HTML JavaScript</h3> 
-      <script> 
-          const h1element = document.getElementsByTagName("h1")[0]; 
-          h1element.style.color = "green"; 
-      </script> 
-  </body> 
-  </html>`;
+import { MyEditor } from "@/components/MyEditor";
+import { Toolbar } from "@/components/Toolbar";
+import RoosterEditor from "@/components/RoosterEditor";
+import { TestPlugin } from "@/plugins/testPlugin";
+import { GetContent } from "@/components/GetContent";
 
-const data: ReactElement[] = [<QuickAccess key={1} />];
-
-function Section({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="flex gap-2 p-2 h-full border-r border-gray-custom-primary">
-      {children}
-    </div>
-  );
-}
+// This plugin will insert an English word when user is inputting numbers
 
 export default function Page() {
+  const editorDivRef = useRef<HTMLDivElement | null>(null);
+
+  const [htmlString, setHtmlString] = useState<String>(
+    `<iframe width="100" height="315" src="https://www.youtube.com/embed/_BBVcyJ1ClA?si=cbl5JpKlPqKjyTLW" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
+  );
+
+  const iEditor = useRef<IEditor | null>(null);
+
+  console.log(editorDivRef);
+
+  useEffect(() => {
+    const additionalPlugins: EditorPlugin[] = [
+      new ImageEditPlugin(),
+      new TableEditPlugin(),
+      new TestPlugin(),
+    ]; // TODO:
+    if (editorDivRef.current) {
+      iEditor.current = createEditor(
+        editorDivRef.current,
+        additionalPlugins,
+        createModelFromHtml(String(htmlString))
+      );
+    }
+    return () => {
+      iEditor.current?.dispose();
+    };
+  }, [htmlString]);
+
   return (
     <div className="h-full w-full">
       {/* title */}
@@ -47,22 +63,15 @@ export default function Page() {
         </div>
       </div>
       {/* rooster editor options */}
-      <div className="border px-2 flex py-2 items-center justify-between border-b border-gray-custom-primary">
-        {/* make a map */}
-        {data.map((element, index) => {
-          return <Section key={index}>{element}</Section>;
-        })}
-        {/* normal text */}
-        {/* font */}
-        {/* size */}
-        {/* bold, italic, underline, strip, text color */}
-        {/* alignment, list, alignment */}
-        {/* checklist, link, code, image and what not */}
-        {/* mention, reference,emoji,upscript, subscript, number, Tsf */}
-        {/* search, dotted */}
-      </div>
+      <Toolbar iEditor={iEditor!} />
       {/* TODO: make rooster editor */}
-      <RoosterEditor initialHtml={initialHtmlString} />
+      <MyEditor editorDivRef={editorDivRef} />
+      <GetContent
+        htmlString={htmlString}
+        handleHtmlString={setHtmlString}
+        iEditor={iEditor}
+      />
+      {/* <RoosterEditor initialHtml="" /> */}
     </div>
   );
 }

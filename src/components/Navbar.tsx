@@ -1,9 +1,9 @@
 import Image from "next/image";
-import ClearDay from "../assets/navbar/ClearDay.svg";
-import NotificationBell from "../assets/navbar/NotificationBell.svg";
-import QuestionMark from "../assets/navbar/QuestionMark.svg";
-import Settings from "../assets/common/Settings.svg";
-import KeyboardArrow from "../assets/common/KeyboardArrow.svg";
+import ClearDay from "/public/assets/navbar/ClearDay.svg";
+import NotificationBell from "/public/assets/navbar/NotificationBell.svg";
+import QuestionMark from "/public/assets/navbar/QuestionMark.svg";
+import Settings from "/public/assets/common/Settings.svg";
+import KeyboardArrow from "/public/assets/common/KeyboardArrow.svg";
 
 const Navbar = () => {
   return (

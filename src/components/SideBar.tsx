@@ -1,9 +1,9 @@
 import Image from "next/image";
-import AllContents from "../assets/sidebar/AllContents.svg";
-import Blog from "../assets/sidebar/Blog.svg";
-import CalendarToday from "../assets/sidebar/CalendarToday.svg";
-import AddSection from "../assets/sidebar/AddSection.svg";
-import Settings from "../assets/common/Settings.svg";
+import AllContents from "/public/assets/sidebar/AllContents.svg";
+import Blog from "/public/assets/sidebar/Blog.svg";
+import CalendarToday from "/public/assets/sidebar/CalendarToday.svg";
+import AddSection from "/public/assets/sidebar/AddSection.svg";
+import Settings from "/public/assets/common/Settings.svg";
 
 const SideBar = () => {
   return (

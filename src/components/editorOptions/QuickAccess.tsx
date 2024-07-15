@@ -1,8 +1,8 @@
 import Image from "next/image";
 import React from "react";
 
-import Undo from "../../assets/rooster/editorOptions/Undo.svg";
-import Redo from "../../assets/rooster/editorOptions/Redo.svg";
+import Undo from "/public/assets/rooster/editorOptions/Undo.svg";
+import Redo from "/public/assets/rooster/editorOptions/Redo.svg";
 
 export const QuickAccess = () => {
   return (
