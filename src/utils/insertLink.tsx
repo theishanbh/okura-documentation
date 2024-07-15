@@ -36,6 +36,7 @@ export function insertLink(
   displayText?: string,
   target?: string
 ) {
+  // focus on the editor
   editor.focus();
 
   const url = (checkXss(link) || "").trim();

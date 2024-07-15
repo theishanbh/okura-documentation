@@ -33,7 +33,15 @@ export default function Page() {
 
   useEffect(() => {
     const additionalPlugins: EditorPlugin[] = [
-      new ImageEditPlugin(),
+      new ImageEditPlugin({
+        borderColor: "#DB626C",
+        disableRotate: true,
+        minWidth: 10,
+        minHeight: 10,
+        disableCrop: false,
+        disableSideResize: false,
+        preserveRatio: false,
+      }),
       new TableEditPlugin(),
       new TestPlugin(),
     ]; // TODO:
