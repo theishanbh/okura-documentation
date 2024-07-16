@@ -4,28 +4,23 @@ import type { Config } from "tailwindcss";
 const colors = {
   ...defaultColors,
   ...{
-    blue: {
-      custom: {
+    custom: {
+      blue: {
         primary: "#044899",
         secondary: "#9EBEE2",
         50: "#DEEFFE",
       },
-    },
-    white: {
-      custom: {
+      white: {
         primary: "#ffffff",
       },
-    },
-    gray: {
-      custom: {
+      black: {
+        primary: "#232325",
+      },
+      gray: {
         primary: "#D9D9D9",
       },
     },
-    black: {
-      custom: {
-        primary: "#232325",
-      },
-    },
+    dark: {},
   },
 };
 

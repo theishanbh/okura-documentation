@@ -29,7 +29,7 @@ export function insertEmbed(editor: IEditor, src: string) {
       iframe.setAttribute("height", "315");
       iframe.setAttribute(
         "src",
-        "https://www.youtube.com/embed/_BBVcyJ1ClA?si=cbl5JpKlPqKjyTLW"
+        "https://www.youtube.com/embed/ly36kn0ug4k?si=U4sUQAIiti_V4wwL"
       );
       iframe.setAttribute("title", "YouTube video player");
       iframe.setAttribute("frameborder", "0");

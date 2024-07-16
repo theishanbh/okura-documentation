@@ -7,6 +7,7 @@ import {
   createEditor,
   createModelFromHtml,
   EditorPlugin,
+  getFormatState,
   IEditor,
   ImageEditPlugin,
   TableEditPlugin,
@@ -23,13 +24,13 @@ import { GetContent } from "@/components/GetContent";
 export default function Page() {
   const editorDivRef = useRef<HTMLDivElement | null>(null);
 
+  const [formatState, setFormatState] = useState({});
+
   const [htmlString, setHtmlString] = useState<String>(
     `<iframe width="100" height="315" src="https://www.youtube.com/embed/_BBVcyJ1ClA?si=cbl5JpKlPqKjyTLW" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
   );
 
   const iEditor = useRef<IEditor | null>(null);
-
-  console.log(editorDivRef);
 
   useEffect(() => {
     const additionalPlugins: EditorPlugin[] = [
@@ -45,6 +46,7 @@ export default function Page() {
       new TableEditPlugin(),
       new TestPlugin(),
     ]; // TODO:
+
     if (editorDivRef.current) {
       iEditor.current = createEditor(
         editorDivRef.current,
@@ -52,28 +54,34 @@ export default function Page() {
         createModelFromHtml(String(htmlString))
       );
     }
-    return () => {
-      iEditor.current?.dispose();
-    };
+    // return () => {
+    //   iEditor.current?.dispose();
+    // };
   }, [htmlString]);
 
   return (
     <div className="h-full w-full">
       {/* title */}
-      <div className=" bg-blue-custom-50 border py-2 px-4 flex items-center justify-between border-blue-custom-secondary">
+      <div className=" bg-custom-blue-50 border py-2 px-4 flex items-center justify-between border-custom-blue-secondary">
         <span className="text-sm">Title of the page</span>
-        <div className=" border-l border-blue-custom-secondary">
+        <div className=" border-l border-custom-blue-secondary">
           <Image
-            className="h-6 w-6 pl-2 text-black-custom-primary"
+            className="h-6 w-6 pl-2 text-custom-black-primary"
             src={KeyboardArrow}
             alt="arrow"
           />
         </div>
       </div>
       {/* rooster editor options */}
-      <Toolbar iEditor={iEditor!} />
+      <Toolbar iEditor={iEditor!} formatState={formatState} />
       {/* TODO: make rooster editor */}
-      <MyEditor editorDivRef={editorDivRef} />
+      <MyEditor
+        editorDivRef={editorDivRef}
+        formatState={formatState}
+        setFormatState={setFormatState}
+        iEditor={iEditor}
+        htmlString={htmlString}
+      />
       <GetContent
         htmlString={htmlString}
         handleHtmlString={setHtmlString}

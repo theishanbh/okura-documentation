@@ -9,25 +9,25 @@ const Navbar = () => {
   return (
     <div className="flex h-14">
       {/* left section */}
-      <div className="min-w-48 bg-blue-custom-primary border-blue-secondary border pl-4 ">
+      <div className="min-w-48 bg-custom-blue-primary border-blue-secondary border pl-4 ">
         <div className="flex items-center h-full gap-2">
           {/* circular div */}
-          <div className=" h-6 w-6 bg-white-custom-primary rounded-full"></div>
+          <div className=" h-6 w-6 bg-custom-white-primary rounded-full"></div>
           {/* brand name */}
-          <span className="text-white-custom-primary text-lg">Brand Name</span>
+          <span className="text-custom-white-primary text-lg">Brand Name</span>
         </div>
       </div>
       {/* right section */}
       <div className="flex-grow pr-4 justify-between flex items-center h-full border-blue-secondary border">
         {/* home, project, templates, create */}
-        <div className="pl-4 flex gap-6 justify-center items-center text-blue-custom-primary  h-full text-lg">
+        <div className="pl-4 flex gap-6 justify-center items-center text-custom-blue-primary  h-full text-lg">
           <span className="">Home</span>
           <span className="flex gap-2">
             <span>Projects</span>
             <Image src={KeyboardArrow} alt="alt" />
           </span>
           <span className="">Templates</span>
-          <button className="text-white-custom-primary bg-blue-custom-primary py-1 px-2 rounded-lg">
+          <button className="text-custom-white-primary bg-custom-blue-primary py-1 px-2 rounded-lg">
             + Create
           </button>
         </div>
@@ -38,11 +38,11 @@ const Navbar = () => {
             <div className="relative">
               <input
                 type="text"
-                className="pl-10 pr-4 py-1 border-2 border-blue-secondary text-blue-custom-primary rounded-lg focus:border-2 focus:border-blue-secondary "
+                className="pl-10 pr-4 py-1 border-2 border-blue-secondary text-custom-blue-primary rounded-lg focus:border-2 focus:border-blue-secondary "
                 placeholder="Search....."
               />
               <svg
-                className="absolute left-3 top-1/2 transform -translate-y-1/2 text-blue-custom-primary w-5 h-5"
+                className="absolute left-3 top-1/2 transform -translate-y-1/2 text-custom-blue-primary w-5 h-5"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -72,7 +72,7 @@ const Navbar = () => {
               />
             </div>
             {/* Question mark */}
-            <div className="w-6 h-6 relative rounded-full bg-blue-custom-primary border border-blue-secondary flex items-center justify-center">
+            <div className="w-6 h-6 relative rounded-full bg-custom-blue-primary border border-blue-secondary flex items-center justify-center">
               <Image priority src={QuestionMark} alt="Follow us on Twitter" />
             </div>
             {/* Settings */}
@@ -80,8 +80,8 @@ const Navbar = () => {
               <Image priority src={Settings} alt="Follow us on Twitter" />
             </div>
             {/* Account */}
-            <div className="w-8 h-8 relative rounded-full bg-blue-custom-primary border border-blue-secondary flex items-center justify-center">
-              <span className=" text-white-custom-primary">G</span>
+            <div className="w-8 h-8 relative rounded-full bg-custom-blue-primary border border-blue-secondary flex items-center justify-center">
+              <span className=" text-custom-white-primary">G</span>
             </div>
           </div>
         </div>
