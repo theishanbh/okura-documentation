@@ -61,6 +61,7 @@ import {
   Rooster,
   undoButton,
 } from "roosterjs-react";
+import EditorComment from "./editorOptions/EditorComment";
 
 export const Toolbar = ({
   iEditor,
@@ -189,14 +190,7 @@ export const Toolbar = ({
         >
           @
         </button>
-        <button
-          className="h-full py-2 px-1 hover:bg-custom-blue-50 rounded-sm"
-          onClick={() => {
-            setAlignment(iEditor.current!, "center");
-          }}
-        >
-          <Image src={Comment} alt="comment" />
-        </button>
+        <EditorComment iEditor={iEditor} />
         <EditorEmoji iEditor={iEditor} />
         <button
           className="h-full py-2 px-1 hover:bg-custom-blue-50 rounded-sm"
