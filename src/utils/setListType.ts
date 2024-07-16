@@ -87,8 +87,10 @@ export function setListType(
                       : 1,
                   direction: block.format.direction,
                   textAlign: block.format.textAlign,
+                  listStyleType: "disc",
                   marginBottom: removeMargins ? "0px" : undefined,
                   marginTop: removeMargins ? "0px" : undefined,
+                  marginLeft: "3px",
                 }),
               ],
               // For list bullet, we only want to carry over these formats from segments:

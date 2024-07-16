@@ -17,7 +17,6 @@ import {
   setTextColor,
   toggleBlockQuote,
   toggleBold,
-  toggleBullet,
   toggleCode,
   toggleItalic,
   toggleStrikethrough,
@@ -62,6 +61,7 @@ import {
   undoButton,
 } from "roosterjs-react";
 import EditorComment from "./editorOptions/EditorComment";
+import { toggleBullet } from "@/utils/toggleBullet";
 
 export const Toolbar = ({
   iEditor,
@@ -109,7 +109,7 @@ export const Toolbar = ({
         <button
           className="h-full py-2 px-1 hover:bg-custom-blue-50 rounded-sm"
           onClick={() => {
-            toggleBullet(iEditor.current!);
+            toggleBullet(iEditor.current!, true);
           }}
         >
           <Image src={BulletList} alt="alignment" />

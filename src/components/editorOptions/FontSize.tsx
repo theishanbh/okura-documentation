@@ -15,6 +15,10 @@ export default function FontSize({
   fontsize: string;
   setFontsize: React.Dispatch<React.SetStateAction<string>>;
 }) {
+  const extractNumber = (str: String) => {
+    const match = str.match(/\d+/);
+    return match ? match[0] : null;
+  };
   return (
     <div>
       <button
@@ -28,7 +32,7 @@ export default function FontSize({
       </button>
       <input
         type="input"
-        value={fontsize}
+        value={extractNumber(fontsize) || "12"}
         className="w-8 border border-custom-blue-secondary text-center py-1 text-xs bg-custom-blue-50 mx-1 rounded-md"
       />
       <button
