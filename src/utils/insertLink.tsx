@@ -1,3 +1,4 @@
+import { matchLink } from "roosterjs";
 import {
   addLink,
   addSegment,
@@ -8,6 +9,7 @@ import {
   mergeModel,
 } from "roosterjs-content-model-dom";
 import type { ContentModelLink, IEditor } from "roosterjs-content-model-types";
+import { adjustTrailingSpaceSelection } from "./adjustTrailingSpaceSelection";
 
 // Regex matching Uri scheme
 const URI_REGEX = /^[a-zA-Z]+:/i;
@@ -36,12 +38,12 @@ export function insertLink(
   displayText?: string,
   target?: string
 ) {
-  // focus on the editor
   editor.focus();
 
   const url = (checkXss(link) || "").trim();
   if (url) {
-    const linkUrl = "http://www.google.com";
+    const linkData = matchLink(url);
+    const linkUrl = linkData ? linkData.normalizedUrl : applyLinkPrefix(url);
     const links: ContentModelLink[] = [];
     let anchorNode: Node | undefined;
 
@@ -77,12 +79,15 @@ export function insertLink(
           segments.every((x) => x.segmentType == "SelectionMarker") ||
           (!!text && text != originalText)
         ) {
-          const segment = createText(text || url, {
-            ...segments[0]?.format,
-            ...editor.getPendingFormat(),
-          });
+          const segment = createText(
+            text || (linkData ? linkData.originalUrl : url),
+            {
+              ...segments[0]?.format,
+              ...editor.getPendingFormat(),
+            }
+          );
           const doc = createContentModelDocument();
-          const link = createLink(linkUrl, anchorTitle, target);
+          const link = createLink(linkUrl, anchorTitle, target, true);
 
           addLink(segment, link);
           addSegment(doc, segment);
@@ -95,6 +100,8 @@ export function insertLink(
             mergeFormat: "mergeAll",
           });
         }
+
+        adjustTrailingSpaceSelection(model);
         return segments.length > 0;
       },
       {

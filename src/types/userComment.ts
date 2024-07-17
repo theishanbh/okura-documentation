@@ -4,4 +4,5 @@ export type commentProps = {
   position: string;
   comment: string;
   reaction: string;
+  isResolved: boolean;
 };

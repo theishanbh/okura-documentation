@@ -37,8 +37,21 @@ const CommentPopup = ({
     handleComment(updatedComments);
   };
 
+  // TODO: reaction deleting other reactions
+  const handleResolveChange = (id: number) => {
+    console.log(id);
+    // console.log(prevComments);
+    const updatedComments = prevComments.map((comment) => {
+      if (comment.id === id) {
+        return { ...comment, isResolved: true };
+      }
+      return comment;
+    });
+    handleComment(updatedComments);
+  };
+
   return (
-    <div className=" bg-gray-100">
+    <div className="relative bg-gray-100">
       <div className=" mx-auto bg-white shadow-lg rounded-lg mb-4">
         {prevComments.map((comment, index) => (
           <div key={index} className="p-4">
@@ -106,16 +119,38 @@ const CommentPopup = ({
                   </div>
                 )}
               </div>
-
-              <button
-                onClick={() => {
-                  console.log("comment removed");
-                  handleComment(prevComments.filter((_, i) => i !== index));
-                }}
-                className="h-5 w-5 underline text-custom-blue-primary"
-              >
-                Resolve
-              </button>
+              {comment.isResolved ? (
+                <div className="flex gap-20">
+                  <button
+                    onClick={() => {
+                      console.log("comment resolved");
+                      handleResolveChange(comment.id);
+                    }}
+                    className="h-5 w-5 underline text-red-400"
+                  >
+                    Dissaprove
+                  </button>
+                  <button
+                    onClick={() => {
+                      console.log("comment resolved");
+                      handleResolveChange(comment.id);
+                    }}
+                    className="h-5 w-5 underline text-custom-blue-primary"
+                  >
+                    Approve
+                  </button>
+                </div>
+              ) : (
+                <button
+                  onClick={() => {
+                    console.log("comment removed");
+                    handleResolveChange(comment.id);
+                  }}
+                  className="h-5 w-5 underline text-custom-blue-primary"
+                >
+                  Resolve
+                </button>
+              )}
             </div>
           </div>
         ))}
@@ -148,6 +183,7 @@ const CommentPopup = ({
                     position: user.position,
                     comment: userComment,
                     reaction: "",
+                    isResolved: false,
                   },
                 ]);
                 setUserComment("");

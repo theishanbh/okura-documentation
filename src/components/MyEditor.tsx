@@ -22,7 +22,7 @@ export const MyEditor = ({
             setFormatState(getFormatState(iEditor.current!));
           }
         }}
-        className="border p-5 border-gray-300 rounded-lg min-h-[200px]"
+        className="border p-5 border-gray-300 rounded-lg min-h-[500px]"
       />
     </>
   );

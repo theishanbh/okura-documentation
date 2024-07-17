@@ -1,77 +1,56 @@
 import Image from "next/image";
 import React, { MutableRefObject, useEffect, useState } from "react";
 import {
-  changeFontSize,
-  Editor,
-  editTable,
-  getFormatState,
   IEditor,
-  insertImage,
-  insertLink,
-  insertTable,
-  redo,
   setAlignment,
   setFontName,
-  setFontSize,
+  setHeadingLevel,
   setIndentation,
-  setTextColor,
   toggleBlockQuote,
   toggleBold,
   toggleCode,
-  toggleItalic,
-  toggleStrikethrough,
   toggleSubscript,
   toggleSuperscript,
-  toggleUnderline,
-  undo,
 } from "roosterjs";
 
-import { insertEmoji } from "@/utils/insertEmoji";
-import { insertEmbed } from "@/utils/insertEmbed";
-import DropDown from "./editorOptions/DropDown";
+import DropDown from "./editorOptions/DropDownFont";
 
 // svg import
-import Undo from "/public/assets/rooster/editorOptions/Undo.svg";
-import Redo from "/public/assets/rooster/editorOptions/Redo.svg";
-import Alignment from "/public/assets/rooster/editorOptions/Alignment.svg";
 import BulletList from "/public/assets/rooster/editorOptions/BulletList.svg";
 import CheckBox from "/public/assets/rooster/editorOptions/CheckBox.svg";
-import Comment from "/public/assets/rooster/editorOptions/Comment.svg";
-import Emoji from "/public/assets/rooster/editorOptions/Emoji.svg";
-import FormatClear from "/public/assets/rooster/editorOptions/FormatClear.svg";
-import ImageIcon from "/public/assets/rooster/editorOptions/ImageIcon.svg";
 import IndentDecrease from "/public/assets/rooster/editorOptions/IndentDecrease.svg";
 import IndentIncrease from "/public/assets/rooster/editorOptions/IndentIncrease.svg";
 import LinkIcon from "/public/assets/rooster/editorOptions/LinkIcon.svg";
 import Quote from "/public/assets/rooster/editorOptions/Quote.svg";
 import Subscript from "/public/assets/rooster/editorOptions/Subscript.svg";
 import Superscript from "/public/assets/rooster/editorOptions/Superscript.svg";
-import Table from "/public/assets/rooster/editorOptions/Table.svg";
-import Video from "/public/assets/rooster/editorOptions/Video.svg";
 import { QuickAccess } from "./editorOptions/QuickAccess";
 import FontSize from "./editorOptions/FontSize";
 import { QuickChange } from "./editorOptions/QuickChange";
 import EditorAlignment from "./editorOptions/EditorAlignment";
 import { EditorEmoji } from "./editorOptions/EditorEmoji";
-import {
-  createRibbonPlugin,
-  decreaseFontSizeButton,
-  Ribbon,
-  Rooster,
-  undoButton,
-} from "roosterjs-react";
+
 import EditorComment from "./editorOptions/EditorComment";
 import { toggleBullet } from "@/utils/toggleBullet";
+import { EditorTable } from "./editorOptions/EditorTable";
+import { EditorImage } from "./editorOptions/EditorImage";
+import { EditorVideo } from "./editorOptions/EditorVideo";
+import DropDownFont from "./editorOptions/DropDownFont";
+import DropDownHeading from "./editorOptions/DropDownHeading";
+import { EditorLink } from "./editorOptions/EditorLink";
 
 export const Toolbar = ({
   iEditor,
   formatState,
+  setShowCommentBox,
 }: {
   iEditor: MutableRefObject<IEditor | null>;
   formatState: any;
+  setShowCommentBox: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   // useeffect for font
   const [font, setFont] = React.useState("Arial");
+  const [heading, setHeading] = React.useState<0 | 1 | 2 | 3 | 4 | 5 | 6>(0);
 
   useEffect(() => {
     if (iEditor.current) {
@@ -79,17 +58,25 @@ export const Toolbar = ({
     }
   }, [iEditor, font]);
 
-  const ribbonPlugin = createRibbonPlugin();
+  useEffect(() => {
+    if (iEditor.current) {
+      setHeadingLevel(iEditor.current, heading);
+    }
+  }, [iEditor, heading]);
 
   const [fontsize, setFontsize] = useState("12 pt");
+
   return (
     <div className="border px-2 py-2 flex items-center border-b border-custom-gray-primary">
       <div className="flex h-full pr-1 border-r border-custom-gray-primary">
-        <QuickAccess iEditor={iEditor} />
+        <QuickAccess iEditor={iEditor} formatState={formatState} />
+      </div>
+      <div className="flex px-1 border-r border-custom-gray-primary">
+        <DropDownHeading font={heading} handleFont={setHeading} />
       </div>
       {/* normal text */}
       <div className="flex px-1 border-r border-custom-gray-primary">
-        <DropDown font={font} handleFont={setFont} />
+        <DropDownFont font={font} handleFont={setFont} />
       </div>
       <div className="flex items-center px-1 justify-center border-r border-custom-gray-primary">
         <FontSize
@@ -140,38 +127,10 @@ export const Toolbar = ({
         >
           <Image src={CheckBox} alt="alignment" />
         </button>
-        <button
-          className="h-full py-2 px-1 hover:bg-custom-blue-50 rounded-sm"
-          onClick={() => {
-            setAlignment(iEditor.current!, "center");
-          }}
-        >
-          <Image src={LinkIcon} alt="alignment" />
-        </button>
-        <button
-          className="h-full py-2 px-1 hover:bg-custom-blue-50 rounded-sm"
-          onClick={() => {
-            setAlignment(iEditor.current!, "center");
-          }}
-        >
-          <Image src={ImageIcon} alt="alignment" />
-        </button>
-        <button
-          className="h-full py-2 px-1 hover:bg-custom-blue-50 rounded-sm"
-          onClick={() => {
-            insertEmbed(iEditor.current!, "");
-          }}
-        >
-          <Image src={Video} alt="alignment" />
-        </button>
-        <button
-          className="h-full py-2 px-1 hover:bg-custom-blue-50 rounded-sm"
-          onClick={() => {
-            setAlignment(iEditor.current!, "center");
-          }}
-        >
-          <Image src={Table} alt="alignment" />
-        </button>
+        <EditorLink iEditor={iEditor} />
+        <EditorImage iEditor={iEditor} />
+        <EditorVideo iEditor={iEditor} />
+        <EditorTable iEditor={iEditor} />
         <button
           className="py-1 px-1 hover:bg-custom-blue-50 rounded-sm"
           onClick={() => {
@@ -190,7 +149,10 @@ export const Toolbar = ({
         >
           @
         </button>
-        <EditorComment iEditor={iEditor} />
+        <EditorComment
+          iEditor={iEditor}
+          setShowCommentBox={setShowCommentBox}
+        />
         <EditorEmoji iEditor={iEditor} />
         <button
           className="h-full py-2 px-1 hover:bg-custom-blue-50 rounded-sm"

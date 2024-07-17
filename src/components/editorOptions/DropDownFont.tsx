@@ -2,7 +2,7 @@ import Image from "next/image";
 import React, { ChangeEvent, useState } from "react";
 import KeyboardArrow from "/public/assets/common/KeyboardArrow.svg";
 
-const DropDown = ({
+const DropDownFont = ({
   font,
   handleFont,
 }: {
@@ -10,7 +10,30 @@ const DropDown = ({
   handleFont: (fontName: string) => void;
 }) => {
   // Sample list items to search from
-  const items = ["Calibri", "Arial", "Helvetica"];
+  const items = [
+    "Calibri",
+    "Arial",
+    "Helvetica",
+    "Times New Roman",
+    "Verdana",
+    "Courier New",
+    "Lucida Console",
+    "Tahoma",
+    "Comic Sans MS",
+    "Impact",
+    "Georgia",
+    "Palatino Linotype",
+    "Book Antiqua",
+    "Arial Black",
+    "Arial Narrow",
+    "Gadget",
+    "Trebuchet MS",
+    "Century Gothic",
+    "Lucida Sans Unicode",
+    "Copperplate",
+    "Papyrus",
+    "Brush Script MT",
+  ];
 
   return (
     <div className="relative">
@@ -35,4 +58,4 @@ const DropDown = ({
   );
 };
 
-export default DropDown;
+export default DropDownFont;

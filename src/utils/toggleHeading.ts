@@ -1,0 +1,28 @@
+import { setListType } from "./setListType";
+import type { IEditor } from "roosterjs-content-model-types";
+
+/**
+ * Toggle bullet list type
+ * - When there are some blocks not in bullet list, set all blocks to the given type
+ * - When all blocks are already in bullet list, turn off / outdent there list type
+ * @param editor The editor to operate on
+ * @param removeMargins true to remove margins, false to keep margins @default false
+ */
+export function toggleHeading(
+  editor: IEditor,
+  removeMargins: boolean = false,
+  heading: string = "H1"
+) {
+  editor.focus();
+
+  editor.formatContentModel(
+    (model, context) => {
+      context.newPendingFormat = "preserve";
+
+      return setListType(model, "UL", removeMargins);
+    },
+    {
+      apiName: "toggleBullet",
+    }
+  );
+}

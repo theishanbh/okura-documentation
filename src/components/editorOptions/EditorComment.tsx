@@ -6,27 +6,13 @@ import { MutableRefObject, useEffect, useRef, useState } from "react";
 import CommentPopup from "../CommentPopup";
 import { commentProps } from "@/types/userComment";
 
-const initalComments: commentProps[] = [
-  {
-    id: 1,
-    name: "John Doe",
-    position: "CEO",
-    comment: "This is a great comment",
-    reaction: "👍",
-  },
-];
-
 const EditorComment = ({
   iEditor,
+  setShowCommentBox,
 }: {
   iEditor: React.MutableRefObject<IEditor | null>;
+  setShowCommentBox: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
-  const [comments, setComments] = useState<commentProps[]>(initalComments);
-  const [userComment, setUserComment] = useState<string>("");
-  const [showCommentBox, setShowCommentBox] = useState(false);
-
-  const wrapperRef = useRef(null);
-
   return (
     <div className="relative">
       <div
@@ -36,21 +22,6 @@ const EditorComment = ({
         }}
       >
         <Image src={Comment} alt="comment" />
-      </div>
-      <div
-        ref={wrapperRef}
-        onMouseLeave={() => {
-          setShowCommentBox(false);
-        }}
-        className={`absolute min-w-96 top-10 ${showCommentBox ? "" : "hidden"}`}
-      >
-        <CommentPopup
-          prevComments={comments}
-          handleComment={setComments}
-          iEditor={iEditor}
-          userComment={userComment}
-          setUserComment={setUserComment}
-        />
       </div>
     </div>
   );

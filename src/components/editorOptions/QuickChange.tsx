@@ -7,6 +7,7 @@ import {
   toggleStrikethrough,
   toggleUnderline,
 } from "roosterjs";
+import { EditorTextColor } from "./EditorTextColor";
 
 export const QuickChange = ({
   iEditor,
@@ -45,12 +46,7 @@ export const QuickChange = ({
       >
         Aa
       </button>
-      <button
-        className="px-1 underline decoration-red-600 hover:bg-custom-blue-50 rounded-sm"
-        onClick={() => setTextColor(iEditor.current!, "#d9d9d9")}
-      >
-        A
-      </button>
+      <EditorTextColor iEditor={iEditor} />
     </>
   );
 };

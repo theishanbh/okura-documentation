@@ -2,12 +2,13 @@
 
 import KeyboardArrow from "/public/assets/common/KeyboardArrow.svg";
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { use, useEffect, useRef, useState } from "react";
 import {
   createEditor,
   createModelFromHtml,
   EditorPlugin,
   getFormatState,
+  HyperlinkPlugin,
   IEditor,
   ImageEditPlugin,
   TableEditPlugin,
@@ -18,19 +19,61 @@ import { Toolbar } from "@/components/Toolbar";
 import RoosterEditor from "@/components/RoosterEditor";
 import { TestPlugin } from "@/plugins/testPlugin";
 import { GetContent } from "@/components/GetContent";
+import CommentPopup from "@/components/CommentPopup";
+import { commentProps } from "@/types/userComment";
+import { CommentPlugin } from "@/plugins/commentPlugin";
 
 // This plugin will insert an English word when user is inputting numbers
+
+export type formatStateType = {
+  bold: boolean;
+  italic: boolean;
+  isUnderline: boolean;
+  subscript: boolean;
+  superscript: boolean;
+  strikethrough: boolean;
+  justifyLeft: boolean;
+  justifyCenter: boolean;
+  justifyRight: boolean;
+  justifyFull: boolean;
+  insertOrderedList: boolean;
+  insertUnorderedList: boolean;
+  isBlockQuote: boolean;
+  isHeader: boolean;
+  headerLevel: number;
+  isCodeBlock: boolean;
+  isBullet: boolean;
+  isNumbering: boolean;
+  isTable: boolean;
+  isImage: boolean;
+  canUnlink: boolean;
+  isEditor: boolean;
+  isEmoji: boolean;
+  isComment: boolean;
+  isVideo: boolean;
+};
 
 export default function Page() {
   const editorDivRef = useRef<HTMLDivElement | null>(null);
 
-  const [formatState, setFormatState] = useState({});
+  const [comments, setComments] = useState<commentProps[]>([]);
+  const [userComment, setUserComment] = useState<string>("");
+  const [showCommentBox, setShowCommentBox] = useState(false);
+
+  const [formatState, setFormatState] = useState<formatStateType>();
 
   const [htmlString, setHtmlString] = useState<String>(
     `<iframe width="100" height="315" src="https://www.youtube.com/embed/_BBVcyJ1ClA?si=cbl5JpKlPqKjyTLW" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
   );
 
   const iEditor = useRef<IEditor | null>(null);
+
+  useEffect(() => {
+    // console.log(formatState);
+    if (iEditor.current && formatState?.isUnderline && formatState?.canUnlink) {
+      setShowCommentBox(true);
+    }
+  }, [formatState, htmlString]);
 
   useEffect(() => {
     const additionalPlugins: EditorPlugin[] = [
@@ -45,6 +88,7 @@ export default function Page() {
       }),
       new TableEditPlugin(),
       new TestPlugin(),
+      // new HyperlinkPlugin(),
     ]; // TODO:
 
     if (editorDivRef.current) {
@@ -73,7 +117,27 @@ export default function Page() {
         </div>
       </div>
       {/* rooster editor options */}
-      <Toolbar iEditor={iEditor!} formatState={formatState} />
+      <Toolbar
+        iEditor={iEditor!}
+        formatState={formatState}
+        setShowCommentBox={setShowCommentBox}
+      />
+      <div
+        onMouseLeave={() => {
+          setShowCommentBox(false);
+        }}
+        className={`absolute min-w-96 top-44 right-0 ${
+          showCommentBox ? "" : "hidden"
+        }`}
+      >
+        <CommentPopup
+          prevComments={comments}
+          handleComment={setComments}
+          iEditor={iEditor}
+          userComment={userComment}
+          setUserComment={setUserComment}
+        />
+      </div>
       {/* TODO: make rooster editor */}
       <MyEditor
         editorDivRef={editorDivRef}

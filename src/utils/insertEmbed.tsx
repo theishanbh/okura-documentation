@@ -24,13 +24,13 @@ export function insertEmbed(editor: IEditor, src: string) {
     (model, context) => {
       const iframe = document.createElement("iframe");
 
+      var id = src.split("?v=")[1]; //sGbxmsDFVnE
+      var embedlink = "http://www.youtube.com/embed/" + id;
+
       // Step 2: Set iframe attributes
       iframe.setAttribute("width", "500");
       iframe.setAttribute("height", "315");
-      iframe.setAttribute(
-        "src",
-        "https://www.youtube.com/embed/ly36kn0ug4k?si=U4sUQAIiti_V4wwL"
-      );
+      iframe.setAttribute("src", embedlink);
       iframe.setAttribute("title", "YouTube video player");
       iframe.setAttribute("frameborder", "0");
       iframe.setAttribute(
@@ -40,7 +40,6 @@ export function insertEmbed(editor: IEditor, src: string) {
       iframe.setAttribute("referrerpolicy", "strict-origin-when-cross-origin");
       iframe.setAttribute("allowfullscreen", "");
       //   src = `<iframe width="100" height="315" src="https://www.youtube.com/embed/_BBVcyJ1ClA?si=cbl5JpKlPqKjyTLW" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`;
-      const emoji = createText(src);
       const doc = createContentModelDocument();
       addSegment(doc, createEntity(iframe));
       mergeModel(model, doc);
